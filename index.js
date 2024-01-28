@@ -4,6 +4,8 @@ const cors = require('cors')
 
 const app = express()
 
+app.use(express.static('dist')) //to include the frontend code that is in the dist file
+//whenever express gets an HTTP GET request it will first check if the dist directory contains a file corresponding to the request's address. If a correct file is found, express will return it.
 app.use(express.json()) //to access the date easily when posting new note to server
 //Without the json-parser, the body property would be undefined
 
