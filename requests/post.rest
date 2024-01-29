@@ -1,0 +1,7 @@
+POST https://helsinki-course-part3.onrender.com/api/notes
+Content-Type: application/json
+
+{
+    "content" : "added note via POST",
+    "important" : true
+}

@@ -1,6 +1,8 @@
 //const http = require('http') //changed with express
+require('dotenv').config() //file that contains sensitive info, also put this file in gitignored to not upload to github
 const express = require('express')
 const cors = require('cors')
+const Note = require('./models/note')
 
 const app = express()
 
@@ -13,23 +15,47 @@ app.use(cors()) //makes it posible to access the backend from other origin
 //if this isnt set, you can only access the backend if it is hosted with the same origin
 //for example now backend runs on localhost:3001 and the forntend on vital localhost:5173 -> which is not the same origin
 
-let notes = [
-    {
-        id: 1,
-        content: "HTML is easyy",
-        important: true
-    },
-    {
-        id: 2,
-        content: "Browser can execute only JavaScript",
-        important: false
-    },
-    {
-        id: 3,
-        content: "GET and POST are the most important methods of HTTP protocol",
-        important: true
-    }
-]
+// let notes = [
+//     {
+//         id: 1,
+//         content: "HTML is easyy",
+//         important: true
+//     },
+//     {
+//         id: 2,
+//         content: "Browser can execute only JavaScript",
+//         important: false
+//     },
+//     {
+//         id: 3,
+//         content: "GET and POST are the most important methods of HTTP protocol",
+//         important: true
+//     }
+// ]
+
+//creating notes
+// const note = new Note({
+//   content: 'CSS is Easy',
+//   important: false,
+// })
+
+// note.save().then(result => {
+//   console.log('note saved!')
+//   mongoose.connection.close()
+// })
+
+// Note.find({}).then(result => {
+//     result.forEach(note => {
+//         console.log(note)
+//     })
+//     mongoose.connection.close()
+// })
+//only the important notes
+// Note.find({ important: true }).then(result => {
+//     // ...
+// })
+
+
 //part used with http
 // const app = http.createServer((request, response) => {
 //     response.writeHead(200, { 'Content-Type': 'application/json' })
@@ -41,7 +67,11 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/notes', (request, response) => {
-    response.json(notes)
+    //response.json(notes)
+    Note.find({})
+        .then(result => {
+            response.json(result)
+        })
 })
 
 app.get('/api/notes/:id', (request, response) => {
@@ -86,14 +116,14 @@ app.post('/api/notes', (request, response) => {
         content: body.content,
         important: Boolean(body.important) || false,
         id: generateId(),
-    } 
+    }
 
     notes = notes.concat(note)
 
     response.json(note)
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
