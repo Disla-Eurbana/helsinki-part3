@@ -25,7 +25,11 @@ mongoose.connect(url)
   })
 
 const noteSchema = new mongoose.Schema({
-    content: String,
+    content: {  //set some validation to the schema, in order to validate hen they make a post request
+        type: String,
+        minLength: 5,
+        required: true
+    }, 
     important: Boolean,
 })
 //used to return part of the data of the db
