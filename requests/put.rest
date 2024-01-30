@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/notes/65b81c4ee923743cf474596c
+Content-Type: application/json
+
+{
+    "content" : "minlength should be 5 characters",
+    "important" : false
+}
