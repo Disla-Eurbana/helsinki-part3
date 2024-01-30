@@ -175,7 +175,7 @@ app.put('/api/notes/:id', (request, response, next) => {
     // }
     //Note.findByIdAndUpdate(request.params.id, note, { new: true })
 
-    const {content, important} = request.body
+    const { content, important } = request.body
     Note.findByIdAndUpdate(
         request.params.id,
         { content, important },
